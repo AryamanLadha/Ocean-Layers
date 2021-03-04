@@ -1,6 +1,9 @@
 // ES6 Imports
-import * as Scroll from 'react-scroll';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { Link, Element, Events, animateScroll as scroll, scrollSpy} from 'react-scroll';
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav'
+import 'bootstrap/dist/css/bootstrap.css';
 //
 import Layers from './Layers.jpg';
 import './App.css';
@@ -31,7 +34,9 @@ function Zone(props){
   return(
     <div className="whitebox">
       <div className="zone-heading">
+      <Element name={props.heading} className="element">
         {props.heading} Zone
+      </Element>
       </div>
       <Section type="General Information" data= {general}/>
       <Section type="Marine Life" data={marine}/>
@@ -51,20 +56,88 @@ function Section(props){
   );
 
 }
-function App() {
-  return (
-    <div className="main">
-      <div className="heading">
-        Layers of the Ocean
-      </div>
+
+class App extends React.Component{
+  componentDidMount(){
+    Events.scrollEvent.register('begin', function(to, element) {
+      console.log('begin', arguments);
+    });
+ 
+    Events.scrollEvent.register('end', function(to, element) {
+      console.log('end', arguments);
+    });
+ 
+    scrollSpy.update();
+  };
+  componentWillUnmount(){
+    Events.scrollEvent.remove('begin');
+    Events.scrollEvent.remove('end');
+  };
+  scrollToTop(){
+    scroll.scrollToTop();
+  };
+  scrollToBottom(){
+    scroll.scrollToBottom();
+  };
+  scrollTo(){
+    scroll.scrollTo(100);
+  };
+  scrollMore(){
+    scroll.scrollMore(100);
+  };
+  handleSetActive(to){
+    console.log(to);
+  };
+  render(){
+    return(
       <div>
-        <img src={Layers} alt="Layers of the Ocean" />
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> </Navbar.Brand>
+          <Nav className="mr-auto">
+            <Nav.Link href="$H">
+              {/* Here */}
+              <Link activeClass="active" to="Epipelagic" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                Epipelagic Zone
+              </Link>
+            </Nav.Link>
+            <Nav.Link href="#home">
+              {/* Here2 */}
+              <Link activeClass="active" to="Mesopelagic" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                Mesopelagic Zone
+              </Link>
+            </Nav.Link>
+            <Nav.Link href="#features">
+              {/* Here 3 */}
+              <Link activeClass="active" to="Bathypelagic" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                Bathypelagic Zone
+              </Link>
+            </Nav.Link>
+            <Nav.Link href="#pricing">
+              {/* Here 4 */}
+              <Link activeClass="active" to="Abyssopelagic" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
+                Abyssopelagic Zone
+              </Link>
+            </Nav.Link>
+          </Nav>
+        </Navbar>
+        <div>
+          <div className="main">
+            <div className="heading">
+              Layers of the Ocean
+            </div>
+            <div>
+              <img src={Layers} alt="Layers of the Ocean" />
+            </div>
+              <Zone heading="Epipelagic"/>
+              <Zone heading="Mesopelagic"/>
+              <Zone heading="Bathypelagic"/>
+              <Zone heading="Abyssopelagic"/>
+            <a className="top" href="/#" onClick={this.scrollToTop}> Scroll to Top</a>
+          </div>
+        </div>
       </div>
-      <Zone heading="Epipelagic"/>
-      <Zone heading="Mesopelagic"/>
-      <Zone heading="Bathypelagic"/>
-      <Zone heading="Abyssopelagic"/>
-    </div>
-  );
+    );
+  };
 }
+
 export default App;

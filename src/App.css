@@ -58,3 +58,9 @@ img{
   font-weight: 400px;
   text-align:left;
 }
+
+top{
+  justify-content: center;
+  width: 100%;
+  margin:10em;
+}
