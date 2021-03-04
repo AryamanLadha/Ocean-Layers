@@ -94,7 +94,7 @@ class App extends React.Component{
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home"> </Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="$H">
+            <Nav.Link>
               {/* Here */}
               <Link activeClass="active" to="Epipelagic" spy={true} smooth={true} offset={50} duration={500} onSetActive={this.handleSetActive}>
                 Epipelagic Zone
